@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { db } from "../firebaseConfig"
 import { useNavigate } from "react-router-dom"
-import { collection, getDocs, deleteDoc, doc, updateDoc, query, where } from "firebase/firestore"
+import { collection, getDocs, deleteDoc, doc, updateDoc, query, where, orderBy } from "firebase/firestore"
 import "../styles/productoTabla.css"
 
 function ProductosTabla() {
@@ -16,12 +16,12 @@ function ProductosTabla() {
   const handleLogout = () => {
     navigate("/home")
   }
-
-  // Cargar los productos desde Firestore al montar el componente
+  
   useEffect(() => {
     const fetchData = async () => {
       const productosCollection = collection(db, "productos")
-      const productosSnapshot = await getDocs(productosCollection)
+      const productosQuery = query(productosCollection, orderBy("nombre"))
+      const productosSnapshot = await getDocs(productosQuery)
       const productosList = productosSnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -31,6 +31,7 @@ function ProductosTabla() {
     }
     fetchData()
   }, [])
+  
 
   // Filtrar productos según el término de búsqueda
   useEffect(() => {
