@@ -33,9 +33,9 @@ export const RegisProducto = () => {
       }
 
       // Agregar Producto
-      const newId = await getNewProductId() // Obtiene el siguiente ID disponible
+     // const newId = await getNewProductId() // Obtiene el siguiente ID disponible
       await setDoc(doc(productsRef), {
-        id: newId,
+        //id: newId,
         nombre: nombre.toUpperCase(),
         categoria: categoria.toUpperCase(),
         talla: parseFloat(talla),
@@ -56,16 +56,16 @@ export const RegisProducto = () => {
     }
   }
 
-  const getNewProductId = async () => {
-    const productsRef = collection(db, "productos")
-    const querySnapshot = await getDocs(productsRef)
-    let newId = 1
-    if (!querySnapshot.empty) {
-      const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1].data()
-      newId = lastDoc.id + 1
-    }
-    return newId
-  }
+  // const getNewProductId = async () => {
+  //   const productsRef = collection(db, "productos")
+  //   const querySnapshot = await getDocs(productsRef)
+  //   let newId = 1
+  //   if (!querySnapshot.empty) {
+  //     const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1].data()
+  //     newId = lastDoc.id + 1
+  //   }
+  //   return newId
+  // }
 
   return (
     <div className="register-container">
